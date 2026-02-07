@@ -1,0 +1,50 @@
+// Simple ping-pong test to get estimated message latency (Shmem)
+#include <iostream>
+#include <functional>
+#include <shmem.h>
+#include <mpi.h>
+#include "pingpong.h"
+
+int main()
+{
+    shmem_init();
+    int size = shmem_n_pes();
+    int rank = shmem_my_pe();
+    if (size != 2) {
+        throw std::runtime_error{"requires exactly two processors"};
+    }
+
+    // The number being sent/received
+    int* data = (int*)shmem_malloc(sizeof(int));
+    int* flag = (int*)shmem_malloc(sizeof(int));
+
+    double latency = pingpong(
+        [&](int iter) {
+            shmem_barrier_all();
+        },
+        [&](int iter) {
+            if (rank == 0) {
+                shmem_int_p(data, iter, 1);
+                shmem_fence();
+                shmem_quiet();
+                shmem_int_p(flag, 1, 1);
+            } else {
+                // Wait until the flag is set
+                while (!*flag) {}
+            }
+            *flag = 0;
+        },
+        [&](int iter) {
+            if (rank == 1) {
+                if (*data != iter) {
+                    throw std::runtime_error{"Invalid data received"};
+                }
+            }
+        }
+    );
+
+    std::cout << "rank=" << rank << ",latency=" << latency << "\n";
+
+    shmem_finalize();
+    return 0;
+}
