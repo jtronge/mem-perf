@@ -3,8 +3,8 @@
 
 #include <chrono>
 
-const int WARMUP = 10;
-const int NITERS = 20;
+const int WARMUP = 20;
+const int NITERS = 200;
 
 // Run a ping-pong latency test, returning average time in seconds.
 static inline double time_work(std::function<void(int)> prepare, std::function<void(int)> do_work, std::function<void(int)> check)
@@ -21,8 +21,6 @@ static inline double time_work(std::function<void(int)> prepare, std::function<v
             auto time_stop = std::chrono::high_resolution_clock::now();
             std::chrono::duration<double> duration = time_stop - time_start;
             total += duration.count();
-            // total += std::chrono::duration_cast<double, std::chrono::seconds>(duration);
-            // total += std::chrono::duration_cast<double, std::chrono::seconds>(time_stop - time_start).count();
         }
 
         // Check the result
