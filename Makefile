@@ -1,15 +1,18 @@
 MPI_CXX = mpicxx
 SHMEM_CXX = oshc++
 
-all: pingpong_mpi pingpong_shmem
+all: latency_mpi latency_shmem bw_mpi
 .PHONY: all
 
-pingpong_mpi: pingpong_mpi.cc
+latency_mpi: latency_mpi.cc pingpong.h
 	$(MPI_CXX) -o $@ $<
 
-pingpong_shmem: pingpong_shmem.cc
+latency_shmem: latency_shmem.cc pingpong.h
 	$(SHMEM_CXX) -o $@ $<
 
+bw_mpi: bw_mpi.cc pingpong.h
+	$(MPI_CXX) -o $@ $<
+
 clean:
-	rm -rf pingpong_mpi pingpong_shmem
+	rm -rf latency_mpi latency_shmem
 .PHONY: clean

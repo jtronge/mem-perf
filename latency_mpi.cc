@@ -17,9 +17,11 @@ int main()
     // The number being sent/received
     int x = 0;
 
-    double latency = pingpong(
+    double latency = time_work(
         [&](int iter) {
-            x = iter;
+            if (rank == 0) {
+                x = iter;
+            }
         },
         [&](int iter) {
             if (rank == 0) {

@@ -1,11 +1,11 @@
 #ifndef PINGPONG_H_
 #define PINGPONG_H_
 
-const int WARMUP = 1000;
-const int NITERS = 8000;
+const int WARMUP = 10;
+const int NITERS = 20;
 
 // Run a ping-pong latency test
-static inline double pingpong(std::function<void(int)> prepare, std::function<void(int)> do_work, std::function<void(int)> check)
+static inline double time_work(std::function<void(int)> prepare, std::function<void(int)> do_work, std::function<void(int)> check)
 {
     double total = 0.0;
     for (int i = 0; i < (WARMUP + NITERS); ++i) {

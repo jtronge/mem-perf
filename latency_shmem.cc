@@ -18,14 +18,13 @@ int main()
     int* data = (int*)shmem_malloc(sizeof(int));
     int* flag = (int*)shmem_malloc(sizeof(int));
 
-    double latency = pingpong(
+    double latency = time_work(
         [&](int iter) {
             shmem_barrier_all();
         },
         [&](int iter) {
             if (rank == 0) {
                 shmem_int_p(data, iter, 1);
-                shmem_fence();
                 shmem_quiet();
                 shmem_int_p(flag, 1, 1);
             } else {

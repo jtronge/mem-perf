@@ -1,2 +1,3 @@
-pingpong_mpi
-pingpong_shmem
+latency_mpi
+bw_mpi
+latency_shmem
