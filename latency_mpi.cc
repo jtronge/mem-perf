@@ -2,7 +2,7 @@
 #include <iostream>
 #include <functional>
 #include <mpi.h>
-#include "pingpong.h"
+#include "timing.h"
 
 int main()
 {

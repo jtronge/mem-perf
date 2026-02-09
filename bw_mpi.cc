@@ -1,9 +1,10 @@
+// Simple communication bandwidth test in MPI
 #include <iostream>
 #include <vector>
 #include <functional>
 #include <cstdint>
 #include <mpi.h>
-#include "pingpong.h"
+#include "timing.h"
 
 int main(int argc, char* argv[])
 {

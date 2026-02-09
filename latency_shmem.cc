@@ -3,7 +3,7 @@
 #include <functional>
 #include <shmem.h>
 #include <mpi.h>
-#include "pingpong.h"
+#include "timing.h"
 
 int main()
 {
