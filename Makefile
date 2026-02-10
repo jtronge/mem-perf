@@ -18,5 +18,5 @@ bw: bw.cc timing.h
 	$(CXX) -o $@ $<
 
 clean:
-	rm -rf latency_mpi latency_shmem
+	rm -rf latency_mpi latency_shmem bw_mpi bw
 .PHONY: clean
