@@ -29,7 +29,7 @@ int main()
                 shmem_int_p(flag, 1, 1);
             } else {
                 // Wait until the flag is set
-                while (!*flag) {}
+                shmem_int_wait(flag, 0);
             }
             *flag = 0;
         },
